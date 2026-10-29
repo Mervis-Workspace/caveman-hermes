@@ -1,0 +1,38 @@
+Caveman for Hermes
+Copyright 2026 Meerul Hazeeq
+
+This distribution includes material from Caveman
+(https://github.com/JuliusBrussee/caveman)
+Copyright 2026 Julius Brussee
+Licensed under the Apache License, Version 2.0.
+
+Upstream source: tag v4.0.1, commit d262ab3882952a59312ff3537cd86d894523c5ab.
+
+Statement of changes (Apache License 2.0, section 4b). Upstream targets Claude
+Code and ships a statusline, a `SessionStart` handler, a mode-tracker hook and a
+stats hook that read Claude's JSONL transcripts. That plumbing does not exist in
+Hermes, so this port replaces it and leaves the skill text itself intact:
+
+  ADDED (new work, not from upstream)
+    bin/caveman                     mode state, CLI and stats reader
+    agent-hooks/caveman-mode-guard.py   pre_llm_call: activate + enforce mode
+    agent-hooks/caveman-ledger.py       post_api_request: per-call usage ledger
+    scripts/configure-hooks.py      install/uninstall wiring for config.yaml
+    install.sh, uninstall.sh, tests/verify.sh, docs/
+
+  MODIFIED (skill text, marked in-file with a "Hermes port" notice)
+    skills/caveman/SKILL.md          persistence section: Hermes mode state
+    skills/caveman/README.md         Hermes stack table
+    skills/caveman-help/SKILL.md     Hermes commands, default-mode resolution
+    skills/caveman-stats/SKILL.md    rewritten: native stats instead of Claude I/O
+    skills/caveman-stats/README.md   rewritten: native stats instead of Claude I/O
+    skills/ultracave/SKILL.md        persistence line: Hermes mode state
+    skills/megacave/SKILL.md         persistence line: Hermes mode state
+
+  UNCHANGED (verbatim from upstream v4.0.1)
+    skills/caveman-commit/, skills/caveman-review/, skills/caveman-compress/
+
+The Apache License text is in LICENSE. No upstream NOTICE content is reproduced
+here because the files shipped in this repository are the skills only; the Go
+engine, browser bridge, CLI package and fonts listed in upstream's NOTICE are
+not part of this distribution.
